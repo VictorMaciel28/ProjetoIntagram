@@ -1,7 +1,10 @@
 $(function(){
-    $('button').bind('click', function(){
+   
+    $(form).bind('submit', function(e){
+        e.preventDefault();
 
-        $('div').load("teste.html");
+        var txt=$(this).serialize();
+        console.log(txt);
+    });
 
-    })
 });
