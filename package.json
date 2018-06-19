@@ -1,0 +1,25 @@
+{
+  "name": "projetoinstagram",
+  "version": "1.0.0",
+  "description": "Projeto que consiste na utilização de API do Instagram e do Watson",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VictorMaciel28/ProjetoIntagram.git"
+  },
+  "keywords": [
+    "Instagram",
+    "Tone",
+    "Analyser"
+  ],
+  "author": "Victor Marques, Guilherme Senra, Leonardo Santrovitsch, Thor Salgado",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/VictorMaciel28/ProjetoIntagram/issues"
+  },
+  "homepage": "https://github.com/VictorMaciel28/ProjetoIntagram#readme",
+  "dependencies": {}
+}
