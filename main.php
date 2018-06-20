@@ -15,7 +15,7 @@
 <script>
     
     // Função que vai recuperar as legendas em forma de vetor
-    function getlegendas(){
+    function main(int){
         // URL com acess token completo sem ter que montar.
         var URL = 'https://api.instagram.com/v1/users/self/media/recent/?access_token=859867556.1677ed0.f05bf2fc29444a568ed673012397e6ff';
         $.ajax({ //abertura do ajax
@@ -29,7 +29,7 @@
                     // guardando as legendas dos posts de JSON para um vetor legendas[]
                     legendas[i] = response.data[i].caption.text; 
                 };
-                console.log(legendas);
+                analyze(legendas,int);
             },
             error:function(){ //Caso ocorra algum erro:
                 alert("Deu algum erro.");
@@ -38,13 +38,13 @@
     };
         
 
-    analyze();
-    function analyze(){
+    // Função que basicamente busca o Token pelo arquivo get-token.php, recebe as legendas e manda avaiar.
+    function analyze(legendas,int){
         $.ajax({
             url:'get-token.php',
             type:'GET',
             success:function(token){
-              callToneAnalyzer(token);
+              callToneAnalyzer(token,legendas,int);
             },
             error: function(err) {
               console.error(err);
@@ -52,18 +52,20 @@
         });
     }
 
-    function callToneAnalyzer(token) {
+
+    //função que avalia as legendas, é chamada pela função analyze acima.
+    function callToneAnalyzer(token,legendas,int) {
         $.ajax({
             url:'https://gateway.watsonplatform.net/tone-analyzer/api/v3/tone?version=2016-05-19',
             type:'POST',
-            data: JSON.stringify({text: "Você sempre será a onda que me leva, que me arrasta pro teu mar 🎶 Te amo❤"}),
+            data: JSON.stringify({text: legendas[int]}),
             contentType: 'application/json',
             headers: {
                 'X-Watson-Authorization-Token': token
             },
             success:function(tone){
               $("#myoutput").text(JSON.stringify(tone));
-              console.log(tone);
+              console.log(legendas[int]);
             },
             error: function(err) {
               $("#myoutput").text(JSON.stringify(err));
