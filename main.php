@@ -11,11 +11,21 @@
         <div id="myoutput"></div>
     </body>
 </html>
-
 <script>
+
+
+    var vetlegendas=[];
+    getlegendas();
     
+    
+    function main(num){
+        analyze(vetlegendas,num);
+    }   
+
+
     // Função que vai recuperar as legendas em forma de vetor
-    function main(int){
+    function getlegendas(){
+        legendasv=[];
         // URL com acess token completo sem ter que montar.
         var URL = 'https://api.instagram.com/v1/users/self/media/recent/?access_token=859867556.1677ed0.f05bf2fc29444a568ed673012397e6ff';
         $.ajax({ //abertura do ajax
@@ -29,7 +39,7 @@
                     // guardando as legendas dos posts de JSON para um vetor legendas[]
                     legendas[i] = response.data[i].caption.text; 
                 };
-                analyze(legendas,int);
+                vetlegendas=legendas;
             },
             error:function(){ //Caso ocorra algum erro:
                 alert("Deu algum erro.");
@@ -37,8 +47,7 @@
         });
     };
         
-
-    // Função que basicamente busca o Token pelo arquivo get-token.php, recebe as legendas e manda avaiar.
+    // Função que busca o Token pelo arquivo get-token.php, recebe as legendas e manda avaiar.
     function analyze(legendas,int){
         $.ajax({
             url:'get-token.php',
@@ -51,7 +60,6 @@
             }
         });
     }
-
 
     //função que avalia as legendas, é chamada pela função analyze acima.
     function callToneAnalyzer(token,legendas,int) {
@@ -72,6 +80,4 @@
             }
         });
     }   
-
-
 </script>
