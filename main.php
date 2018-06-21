@@ -16,6 +16,7 @@
     var vetlegendas;
     var informacoes;
     var token;
+    var maiorsentimento = [];
     getlegendas();
     gettoken();
 
@@ -63,10 +64,8 @@
 
     //função que avalia alguma legenda.
     function avaliar(int){
-        
-        callToneAnalyzer(token,vetlegendas,int);
-        
-        function callToneAnalyzer(token,vetlegendas,int) {
+        callToneAnalyzer(token,int);
+        function callToneAnalyzer(token,int) {
             $.ajax({
                 url:'https://gateway.watsonplatform.net/tone-analyzer/api/v3/tone?version=2016-05-19',
                 type:'POST',
@@ -77,11 +76,37 @@
                 },
                 success:function(tone){
                     $("#myoutput").text(JSON.stringify(tone));
-                    console.log(vetlegendas[int]);
-                },
-                error: function(err) {
-                    $("#myoutput").text(JSON.stringify(err));
-                }
+                    vetsentimentos=(tone.document_tone.tone_categories[0].tones);
+                    vetsocial=(tone.document_tone.tone_categories[2].tones);
+                    aux1=findmaior(vetsentimentos);
+                    aux2=findmaior2(vetsocial);
+                    if (aux1.score>aux2.score){
+                        maiorsentimento=aux1;
+                    }else{
+                        maiorsentimento=aux2;
+                    }
+                    console.log(maiorsentimento);
+                    function findmaior(vetsentimentos){
+                        for (i=0;i<4;i++){
+                            if (vetsentimentos[i].score > vetsentimentos[i+1].score){
+                                maior=vetsentimentos[i];
+                            }else{
+                                maior=vetsentimentos[i+1];
+                            }
+                        };
+                    return maior;
+                    };    
+                    function findmaior2(vetsocial){
+                        for (i=0;i<2;i++){
+                            if (vetsocial[i].score > vetsocial[i+1].score){
+                                maior2=vetsentimentos[i];
+                            }else{
+                                maior2=vetsentimentos[i+1];
+                            }
+                        }
+                    return maior2;
+                    }
+                }       
             });
         };
     };   
