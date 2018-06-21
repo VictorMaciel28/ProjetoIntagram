@@ -13,15 +13,14 @@
 </html>
 <script>
 
-
-    var vetlegendas=[];
+    var vetlegendas;
+    var informacoes;
+    var token;
     getlegendas();
-    
-    
-    function main(num){
-        analyze(vetlegendas,num);
-    }   
+    gettoken();
 
+    function main(){
+    }   
 
     // Função que vai recuperar as legendas em forma de vetor
     function getlegendas(){
@@ -40,6 +39,7 @@
                     legendas[i] = response.data[i].caption.text; 
                 };
                 vetlegendas=legendas;
+                informacoes = response.data;
             },
             error:function(){ //Caso ocorra algum erro:
                 alert("Deu algum erro.");
@@ -47,13 +47,13 @@
         });
     };
         
-    // Função que busca o Token pelo arquivo get-token.php, recebe as legendas e manda avaiar.
-    function analyze(legendas,int){
+    // Função que busca o Token pelo arquivo get-token.php.
+    function gettoken(){
         $.ajax({
             url:'get-token.php',
             type:'GET',
-            success:function(token){
-              callToneAnalyzer(token,legendas,int);
+            success:function(response){
+                token=response;
             },
             error: function(err) {
               console.error(err);
@@ -61,23 +61,28 @@
         });
     }
 
-    //função que avalia as legendas, é chamada pela função analyze acima.
-    function callToneAnalyzer(token,legendas,int) {
-        $.ajax({
-            url:'https://gateway.watsonplatform.net/tone-analyzer/api/v3/tone?version=2016-05-19',
-            type:'POST',
-            data: JSON.stringify({text: legendas[int]}),
-            contentType: 'application/json',
-            headers: {
-                'X-Watson-Authorization-Token': token
-            },
-            success:function(tone){
-              $("#myoutput").text(JSON.stringify(tone));
-              console.log(legendas[int]);
-            },
-            error: function(err) {
-              $("#myoutput").text(JSON.stringify(err));
-            }
-        });
-    }   
+    //função que avalia alguma legenda.
+    function avaliar(int){
+        
+        callToneAnalyzer(token,vetlegendas,int);
+        
+        function callToneAnalyzer(token,vetlegendas,int) {
+            $.ajax({
+                url:'https://gateway.watsonplatform.net/tone-analyzer/api/v3/tone?version=2016-05-19',
+                type:'POST',
+                data: JSON.stringify({text: vetlegendas[int]}),
+                contentType: 'application/json',
+                headers: {
+                    'X-Watson-Authorization-Token': token
+                },
+                success:function(tone){
+                    $("#myoutput").text(JSON.stringify(tone));
+                    console.log(vetlegendas[int]);
+                },
+                error: function(err) {
+                    $("#myoutput").text(JSON.stringify(err));
+                }
+            });
+        };
+    };   
 </script>
