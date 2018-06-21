@@ -85,7 +85,6 @@
                     }else{
                         maiorsentimento=aux2;
                     }
-                    console.log(maiorsentimento);
                     function findmaior(vetsentimentos){
                         for (i=0;i<4;i++){
                             if (vetsentimentos[i].score > vetsentimentos[i+1].score){
@@ -97,11 +96,11 @@
                     return maior;
                     };    
                     function findmaior2(vetsocial){
-                        for (i=0;i<2;i++){
+                        for (i=0;i<4;i++){
                             if (vetsocial[i].score > vetsocial[i+1].score){
-                                maior2=vetsentimentos[i];
+                                maior2=vetsocial[i];
                             }else{
-                                maior2=vetsentimentos[i+1];
+                                maior2=vetsocial[i+1];
                             }
                         }
                     return maior2;
