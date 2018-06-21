@@ -1,18 +1,3 @@
-<!doctype html>
-<html lang="en">
-    <head>
-        <title>Watson Tone Analyzer Example</title>
-        <meta charset="utf-8"/>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    </head>
-
-    <body>
-        <h2>This is an example of client side call to Watson Tone analyzer service using an authorization token.</h2>
-        <div id="myoutput"></div>
-    </body>
-</html>
-<script>
-
     var vetlegendas;
     var informacoes;
     var token;
@@ -20,11 +5,9 @@
     getlegendas();
     gettoken();
 
-    function main(){
-    }   
-
     // Função que vai recuperar as legendas em forma de vetor
     function getlegendas(){
+        
         legendasv=[];
         // URL com acess token completo sem ter que montar.
         var URL = 'https://api.instagram.com/v1/users/self/media/recent/?access_token=859867556.1677ed0.f05bf2fc29444a568ed673012397e6ff';
@@ -64,6 +47,7 @@
 
     //função que avalia alguma legenda.
     function avaliar(int){
+        $("#p1").html(vetlegendas[int]);
         callToneAnalyzer(token,int);
         function callToneAnalyzer(token,int) {
             $.ajax({
@@ -80,6 +64,9 @@
                     vetsocial=(tone.document_tone.tone_categories[2].tones);
                     aux1=findmaior(vetsentimentos);
                     aux2=findmaior2(vetsocial);
+                    $("#p2").html(maiorsentimento.tone_name);
+                    $("#p3").html(maiorsentimento.score);
+                    $("#img").attr("src", informacoes[int].images.standard_resolution.url);
                     if (aux1.score>aux2.score){
                         maiorsentimento=aux1;
                     }else{
@@ -109,4 +96,3 @@
             });
         };
     };   
-</script>
