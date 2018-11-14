@@ -10,7 +10,7 @@
         
         legendasv=[];
         // URL com acess token completo sem ter que montar.
-        var URL = 'https://api.instagram.com/v1/users/self/media/recent/?access_token=859867556.1677ed0.f05bf2fc29444a568ed673012397e6ff';
+        var URL = 'https://api.instagram.com/v1/users/self/media/recent/?access_token=<seu acess token>';
         $.ajax({ //abertura do ajax
             type:'GET', //especificação do método. também poderia ser POST
             url: URL, // URL é aquela ali duas linhas acima, que recupera os 20 últimos posts
