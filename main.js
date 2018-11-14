@@ -73,21 +73,19 @@
                         maiorsentimento=aux2;
                     }
                     function findmaior(vetsentimentos){
+                        maior = 0;
                         for (i=0;i<4;i++){
-                            if (vetsentimentos[i].score > vetsentimentos[i+1].score){
+                            if (vetsentimentos[i].score > maior){
                                 maior=vetsentimentos[i];
-                            }else{
-                                maior=vetsentimentos[i+1];
                             }
                         };
                     return maior;
                     };    
                     function findmaior2(vetsocial){
+                        maior2 = 0;
                         for (i=0;i<4;i++){
-                            if (vetsocial[i].score > vetsocial[i+1].score){
+                            if (vetsocial[i].score > maior2){
                                 maior2=vetsocial[i];
-                            }else{
-                                maior2=vetsocial[i+1];
                             }
                         }
                     return maior2;
